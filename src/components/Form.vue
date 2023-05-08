@@ -98,9 +98,10 @@ const onSend = () => {
     interval.value = setInterval(() => {
       count++;
 
-      fetch("/api/comment/store", { method: "post", body: data }).then(
-        (response) => console.log(response)
-      );
+      fetch("https://560a-82-215-96-33.ngrok-free.app/api/comment/store", {
+        method: "post",
+        body: data,
+      }).then((response) => console.log(response));
 
       if (count === form.value.count) onStop();
     }, 0);

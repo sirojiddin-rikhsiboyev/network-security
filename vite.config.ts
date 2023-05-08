@@ -14,12 +14,12 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 8080,
     host: "0.0.0.0",
-    proxy: {
-      "^/api": {
-        target: "https://560a-82-215-96-33.ngrok-free.app",
-        changeOrigin: mode === "development",
-        secure: mode !== "development",
-      },
-    },
+    // proxy: {
+    //   "^/api": {
+    //     target: "https://560a-82-215-96-33.ngrok-free.app",
+    //     changeOrigin: mode === "development",
+    //     secure: mode !== "development",
+    //   },
+    // },
   },
 }));
