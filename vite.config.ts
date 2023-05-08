@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [vue()],
   resolve: {
     alias: {
@@ -12,13 +12,14 @@ export default defineConfig({
     },
   },
   server: {
+    port: 8080,
+    host: "0.0.0.0",
     proxy: {
-      "/api": {
+      "^/api": {
         target: "https://560a-82-215-96-33.ngrok-free.app",
-        changeOrigin: true,
-        secure: false,
-        ws: true,
+        changeOrigin: mode === "development",
+        secure: mode !== "development",
       },
     },
   },
-});
+}));
