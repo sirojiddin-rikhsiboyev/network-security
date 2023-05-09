@@ -1,12 +1,35 @@
-<script setup lang="ts">
-import Form from "@/components/Form.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="form-container">
-    <div class="uk-card uk-card-default uk-card-body uk-width-1-2@s">
-      <Form/>
+  <div>
+    <div
+      uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky"
+    >
+      <nav class="uk-navbar-container">
+        <div class="uk-container">
+          <div uk-navbar>
+            <div class="uk-navbar-left">
+              <ul class="uk-navbar-nav">
+                <li>
+                  <RouterLink exact-active-class="uk-text-primary" to="/">
+                    Форма запроса
+                  </RouterLink>
+                </li>
+                <li>
+                  <RouterLink
+                    exact-active-class="uk-text-primary"
+                    to="/comments"
+                  >
+                    Список комментариев
+                  </RouterLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
+
+    <RouterView />
   </div>
 </template>
-
