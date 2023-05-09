@@ -16,6 +16,8 @@
               {{ idx + 1 }}) {{ comment.name }}
             </p>
 
+            <p class="uk-margin-remove">{{ comment.comment }}</p>
+
             <p class="uk-margin-remove uk-text-small" style="color: gray">
               {{ dateFormatter(comment.created_at) }}
             </p>
@@ -36,6 +38,7 @@ import { tr } from "date-fns/locale";
 interface IComment {
   id: number;
   name: string;
+  comment: string;
   created_at: string;
 }
 
