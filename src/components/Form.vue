@@ -58,6 +58,7 @@
     <button
       v-else
       class="uk-button uk-button-secondary uk-width"
+      :disabled="loading"
       @click="onSend"
     >
       Отправить
@@ -67,14 +68,13 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useAlert } from "@/hooks/useAlert";
+import { form } from "@/data/form";
+
+const alert = useAlert();
 
 const interval = ref<number | null>(null);
-
-const form = ref({
-  name: "",
-  comment: "",
-  count: 10,
-});
+const loading = ref<boolean>(false);
 
 const requestCount = computed<number[]>(() => {
   const result = [];
@@ -84,26 +84,29 @@ const requestCount = computed<number[]>(() => {
 
 const onSend = () => {
   const valid =
-    Object.values(form.value).filter(
+    Object.values(form).filter(
       (value: string | number) => value?.toString()?.trim()?.length
-    ).length === Object.keys(form.value).length;
+    ).length === Object.keys(form).length;
 
   if (valid) {
     let count = 0;
     let data = new FormData();
 
-    data.append("name", form.value.name);
-    data.append("comment", form.value.comment);
+    data.append("name", form.name);
+    data.append("comment", form.comment);
 
+    loading.value = true;
     interval.value = setInterval(() => {
       count++;
 
       fetch("https://560a-82-215-96-33.ngrok-free.app/api/comment/store", {
         method: "post",
         body: data,
-      }).then((response) => console.log(response));
+      })
+        .then((response) => alert.successToast("Выполнено успешно"))
+        .finally(() => (loading.value = false));
 
-      if (count === form.value.count) onStop();
+      if (count === form.count) onStop();
     }, 0);
   }
 };
@@ -111,5 +114,6 @@ const onSend = () => {
 const onStop = () => {
   if (interval.value) clearInterval(interval.value);
   interval.value = null;
+  loading.value = false;
 };
 </script>
