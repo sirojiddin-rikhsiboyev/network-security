@@ -52,7 +52,7 @@ onMounted(() => {
   loading.value = true;
   fetch("https://560a-82-215-96-33.ngrok-free.app/api/comment/list")
     .then((response) => response.json())
-    .then((record) => (comments.value = record?.data || []))
+    .then((record) => (comments.value = record?.data?.reverse() || []))
     .finally(() => (loading.value = false));
 });
 </script>
