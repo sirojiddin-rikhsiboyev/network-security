@@ -70,6 +70,7 @@
 import { computed, ref } from "vue";
 import { useAlert } from "@/hooks/useAlert";
 import { form } from "@/data/form";
+import { baseUrl } from "@/data/consts";
 
 const alert = useAlert();
 
@@ -99,7 +100,7 @@ const onSend = () => {
     interval.value = setInterval(() => {
       count++;
 
-      fetch("https://bbb9-185-139-137-108.ngrok-free.app/api/comment/store", {
+      fetch(baseUrl + "/api/comment/store", {
         method: "post",
         body: data,
       })

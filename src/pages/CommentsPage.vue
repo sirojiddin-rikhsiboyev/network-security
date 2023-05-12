@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { format } from "date-fns";
-import { tr } from "date-fns/locale";
+import { baseUrl } from "@/data/consts";
 
 interface IComment {
   id: number;
@@ -50,7 +50,7 @@ const dateFormatter = (value: string) =>
 
 onMounted(() => {
   loading.value = true;
-  fetch("https://bbb9-185-139-137-108.ngrok-free.app/api/comment/list")
+  fetch(baseUrl + "/api/comment/list")
     .then((response) => response.json())
     .then((record) => (comments.value = record?.data?.reverse() || []))
     .finally(() => (loading.value = false));
