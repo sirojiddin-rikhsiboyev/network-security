@@ -92,6 +92,7 @@ const onSend = () => {
   if (valid) {
     let count = 0;
     let data = new FormData();
+    let errors = true;
 
     data.append("name", form.name);
     data.append("comment", form.comment);
@@ -108,17 +109,22 @@ const onSend = () => {
         .then((data) => {
           if (data?.code === 200) alert.successToast("Выполнено успешно");
           else {
-            if (interval.value) clearInterval(interval.value);
+            onStop();
+            if (errors)
+              alert.errorToast(
+                "Слишком много запросов отправлено за указанный период времени"
+              );
+            errors = false;
+          }
+        })
+        .catch(() => {
+          onStop();
+          if (errors)
             alert.errorToast(
               "Слишком много запросов отправлено за указанный период времени"
             );
-          }
+          errors = false;
         })
-        .catch(() =>
-          alert.errorToast(
-            "Слишком много запросов отправлено за указанный период времени"
-          )
-        )
         .finally(() => (loading.value = false));
 
       if (count === form.count) onStop();
