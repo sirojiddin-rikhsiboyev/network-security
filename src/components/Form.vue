@@ -99,11 +99,25 @@ const onSend = () => {
     interval.value = setInterval(() => {
       count++;
 
-      fetch("https://560a-82-215-96-33.ngrok-free.app/api/comment/store", {
+      fetch("https://bbb9-185-139-137-108.ngrok-free.app/api/comment/store", {
         method: "post",
         body: data,
       })
-        .then((response) => alert.successToast("Выполнено успешно"))
+        .then((response) => response.json())
+        .then((data) => {
+          if (data?.code === 200) alert.successToast("Выполнено успешно");
+          else {
+            if (interval.value) clearInterval(interval.value);
+            alert.errorToast(
+              "Слишком много запросов отправлено за указанный период времени"
+            );
+          }
+        })
+        .catch(() =>
+          alert.errorToast(
+            "Слишком много запросов отправлено за указанный период времени"
+          )
+        )
         .finally(() => (loading.value = false));
 
       if (count === form.count) onStop();
